@@ -641,11 +641,12 @@ When an existing product (barcode found) is synced:
 ## Support
 
 For questions or issues during integration, please contact the TipTop development team:
-- Technical Support: [support email]
-- Integration Issues: [integration email]
+- Technical Support: technical@trytiptop.app
+- Integration Issues: technical@trytiptop.app
 
 ## Version History
 
 - **v1.0-rc.1** (2025-11-11): Initial API specification
+
 
 
