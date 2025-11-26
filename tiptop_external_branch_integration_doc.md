@@ -646,5 +646,6 @@ For questions or issues during integration, please contact the TipTop developmen
 
 ## Version History
 
-- **v1.0-beta.1** (2025-11-11): Initial API specification
+- **v1.0-rc.1** (2025-11-11): Initial API specification
+
 
