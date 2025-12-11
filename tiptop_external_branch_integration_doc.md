@@ -31,7 +31,7 @@ The endpoint must return a JSON response with the following structure:
     {
       "barcode": "1234567890123",
       "sku": "PROD-001",
-      "price": 29.99,
+      "price": 43000,
       "quantity": 100,
       "translation": {
         "en": {
@@ -55,7 +55,8 @@ The endpoint must return a JSON response with the following structure:
         ]
       },
       "category": "Console -> PlayStation",
-      "brand": "Sony"
+      "brand": "Sony",
+      "discount": 7200
     }
   ]
 }
@@ -76,12 +77,13 @@ The endpoint must return a JSON response with the following structure:
 |-------|------|----------|-------------|
 | `barcode` | string | **Yes** | Unique product barcode/identifier. Items without barcodes will be skipped. |
 | `sku` | string | No | Stock Keeping Unit identifier. |
-| `price` | decimal | **Yes** | Unit price of the item. |
+| `price` | decimal | **Yes** | Unit price of the item in IQD (Iraqi Dinar). |
 | `quantity` | integer | **Yes** | Available inventory quantity. Set to 0 if out of stock. |
 | `translation` | object | **Yes** | Translations for product name and description in supported languages. |
 | `images` | object | **Yes** | Product images including main image and additional gallery images. |
 | `category` | string | **Yes** | Product category hierarchy (see Category Format below). |
 | `brand` | string | No | Brand name of the product. |
+| `discount` | decimal | No | Discount amount applied to the item in IQD (Iraqi Dinar). Must be >= 0 if provided. Defaults to 0 if not specified. |
 
 ### Translation Object
 
@@ -205,6 +207,10 @@ Response: { "totalItemsCount": 250, "items": [] }
 
 ## Important Notes
 
+### Currency
+All monetary values (`price` and `discount`) must be specified in **IQD (Iraqi Dinar)**. 
+- Prices and discounts should be provided as numbers (e.g., 43500, 7200)
+
 ### Required Fields
 - **`barcode`**: Absolutely required. Items without barcodes will be skipped.
 - **`totalItemsCount`**: Must be accurate and consistent across all page requests.
@@ -217,6 +223,7 @@ Response: { "totalItemsCount": 250, "items": [] }
 - **`sku`**: Helpful for inventory management and cross-referencing.
 - **`translation.ar/ckb/kbd`**: Additional language translations improve accessibility for customers.
 - **`images.other`**: Additional product images improve customer experience and reduce returns.
+- **`discount`**: Discount amount for promotional pricing in IQD (Iraqi Dinar). Must be >= 0 if provided.
 
 ### Data Consistency
 - `totalItemsCount` must remain the same across all page requests in a single sync operation.
@@ -447,6 +454,7 @@ If you receive validation errors, here's how to troubleshoot:
 - ❌ Category with more than 2 levels
 - ❌ Price is 0 or negative
 - ❌ Quantity is negative
+- ❌ Discount is negative (if provided, must be >= 0)
 - ❌ Missing English (en) translation - English is mandatory
 - ❌ Missing main image
 
@@ -514,7 +522,7 @@ When a new product (barcode not found in system) is synced:
 
 ### Product Updates
 When an existing product (barcode found) is synced:
-- Updates price, translations, and category
+- Updates price, translations, category, and discount amount
 - Updates inventory quantity
 - Preserves item ID and historical data
 
@@ -542,7 +550,7 @@ When an existing product (barcode found) is synced:
     {
       "barcode": "1234567890123",
       "sku": null,
-      "price": 29.99,
+      "price": 43000,
       "quantity": 10,
       "translation": {
         "en": {
@@ -558,7 +566,8 @@ When an existing product (barcode found) is synced:
         "other": []
       },
       "category": "General",
-      "brand": null
+      "brand": null,
+      "discount": null
     }
   ]
 }
@@ -602,7 +611,8 @@ When an existing product (barcode found) is synced:
         ]
       },
       "category": "Console->PlayStation",
-      "brand": "Sony"
+      "brand": "Sony",
+      "discount": 5000
     },
     {
       "barcode": "9876543210987",
@@ -632,7 +642,8 @@ When an existing product (barcode found) is synced:
         "other": []
       },
       "category": "Accessories",
-      "brand": "Generic"
+      "brand": "Generic",
+      "discount": 0
     }
   ]
 }
@@ -646,7 +657,6 @@ For questions or issues during integration, please contact the TipTop developmen
 
 ## Version History
 
+- **v1.0-rc.2** (2025-01-XX): Added item discount field support
 - **v1.0-rc.1** (2025-11-11): Initial API specification
-
-
 
