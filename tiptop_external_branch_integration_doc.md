@@ -657,7 +657,8 @@ For questions or issues during integration, please contact the TipTop developmen
 
 ## Version History
 
-- **v1.0-rc.2** (2025-12-11): Added item discount field support
+- **v1.0-rc.2** (2025-12-11): Added item discount field support. All monetary values (price and discount) are now specified in IQD (Iraqi Dinar).
 - **v1.0-rc.1** (2025-11-11): Initial API specification
+
 
 
