@@ -161,7 +161,7 @@ The `categories` list defines the structure and metadata (images) for categories
 |-------|------|----------|-------------|
 | `category` | string | **Yes** | Main category name. |
 | `categoryImageUrl` | string | No | URL for the main category image/icon. |
-| `subcategories` | array | **Yes** | List of subcategories. Can be empty. |
+| `subcategories` | array | No | List of subcategories. Can be empty. |
 
 **Subcategory Object:**
 
@@ -711,4 +711,5 @@ For questions or issues during integration, please contact the TipTop developmen
 - **v1.0-rc.3** (2025-12-17): Added `categories` field to response for defining category hierarchies and image URLs. This enables support for category icons and richer data presentation.
 - **v1.0-rc.2** (2025-12-11): Added item discount field support. All monetary values (price and discount) are now specified in IQD (Iraqi Dinar).
 - **v1.0-rc.1** (2025-11-11): Initial API specification
+
 
