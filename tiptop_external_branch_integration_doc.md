@@ -58,6 +58,19 @@ The endpoint must return a JSON response with the following structure:
       "brand": "Sony",
       "discount": 7200
     }
+  ],
+  "categories": [
+
+    {
+      "category": "Console",
+      "categoryImageUrl": "https://example.com/images/console-icon.jpg",
+      "subcategories": [
+        {
+            "subcategory": "PlayStation",
+            "subcategoryImageUrl": "https://example.com/images/ps-icon.jpg"
+        }
+      ]
+    }
   ]
 }
 ```
@@ -69,7 +82,9 @@ The endpoint must return a JSON response with the following structure:
 | Field | Type | Required | Description |
 |-------|------|----------|-------------|
 | `totalItemsCount` | integer | **Yes** | Total number of items across all pages. This value must remain consistent across all page requests. |
+
 | `items` | array | **Yes** | Array of product items for the current page. Can be empty for pages beyond the last item. |
+| `categories` | array | **Yes** | Array of category definitions including images and hierarchy. |
 
 ### Item Object
 
@@ -136,7 +151,26 @@ The translation object supports four languages: English (`en`), Arabic (`ar`), C
 | `main` | string | Yes | URL to the main product image. |
 | `other` | array of strings | No | URLs to additional product gallery images. Can be empty array. |
 
-### Category Format
+
+
+### Category Definition Object
+
+The `categories` list defines the structure and metadata (images) for categories.
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `category` | string | **Yes** | Main category name. |
+| `categoryImageUrl` | string | No | URL for the main category image/icon. |
+| `subcategories` | array | **Yes** | List of subcategories. Can be empty. |
+
+**Subcategory Object:**
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `subcategory` | string | **Yes** | Subcategory name. |
+| `subcategoryImageUrl` | string | No | URL for the subcategory image/icon. |
+
+### Category Reference Format (in Item)
 
 Categories can be specified in two formats:
 
@@ -645,6 +679,23 @@ When an existing product (barcode found) is synced:
       "brand": "Generic",
       "discount": 0
     }
+  ],
+  "categories": [
+    {
+      "category": "Console",
+      "categoryImageUrl": "https://cdn.example.com/categories/console.jpg",
+      "subcategories": [
+        {
+          "subcategory": "PlayStation",
+          "subcategoryImageUrl": "https://cdn.example.com/categories/playstation.jpg"
+        }
+      ]
+    },
+    {
+        "category": "Accessories",
+        "categoryImageUrl": "https://cdn.example.com/categories/accessories.jpg",
+        "subcategories": []
+    }
   ]
 }
 ```
@@ -657,8 +708,7 @@ For questions or issues during integration, please contact the TipTop developmen
 
 ## Version History
 
+- **v1.0-rc.3** (2025-12-17): Added `categories` field to response for defining category hierarchies and image URLs. This enables support for category icons and richer data presentation.
 - **v1.0-rc.2** (2025-12-11): Added item discount field support. All monetary values (price and discount) are now specified in IQD (Iraqi Dinar).
 - **v1.0-rc.1** (2025-11-11): Initial API specification
-
-
 
